@@ -1,0 +1,62 @@
+info (
+	title: // TODO: add title
+	desc: // TODO: add description
+	author: ""
+	email: ""
+)
+
+type (
+	// Define the request body of the login interface
+	RegisterReq {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
+	// Define the response body of the login interface
+	RegisterResp {
+		Id       int64  `json:"id"`
+		Name     string `json:"name"`
+		Token    string `json:"token"`
+		ExpireAt string `json:"expireAt"`
+	}
+)
+
+type (
+	// Define the request body of the login interface
+	PayloadReq {
+		Message string `json:"message"`
+	}
+	// Define the response body of the login interface
+	TextResp {
+		Message string `json:"message"`
+	}
+)
+
+type (
+	// Define the request body of the login interface
+	LoginReq {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
+	// Define the response body of the login interface
+	LoginResp {
+		Id       int64  `json:"id"`
+		Name     string `json:"name"`
+		Token    string `json:"token"`
+		ExpireAt string `json:"expireAt"`
+	}
+)
+
+// Define an HTTP service
+// The name of the microservice is user, and the generated code directory and configuration file will be related to the value of user
+service user {
+	// Define the name and method of the go file converted by http.HandleFunc
+	@handler Login
+
+	post /user/login (LoginReq) returns (LoginResp)
+
+	@handler Register
+	post /user/register (RegisterReq) returns (RegisterResp)
+
+	@handler curd
+	get /curd (PayloadReq) returns (TextResp)
+}
