@@ -24,10 +24,35 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodGet,
+				Path:    "/test/setredis",
+				Handler: TestSetRedisHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/test/getredis",
+				Handler: TestGetRedisHandler(serverCtx),
+			},
+		},
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
 				Path:    "/curd",
 				Handler: curdHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/profile",
+				Handler: ProfileHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/showall",
+				Handler: ShowAllHandler(serverCtx),
+			},
 		},
-		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
 	)
 }

@@ -1,13 +1,14 @@
 package logic
 
 import (
+	"anysock/pkg/myredis"
 	"context"
 	"github.com/golang-jwt/jwt/v4"
 	"golang.org/x/crypto/bcrypt"
+	"time"
 
 	"anysock/internal/svc"
 	"anysock/internal/types"
-
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -39,20 +40,38 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err erro
 			return &types.LoginResp{ErrorMessage: "User exist already!"}, nil
 		}
 
+		accessExpire := l.svcCtx.Config.JwtAuth.AccessExpire
+
+		now := time.Now().Unix()
+		accessToken, err := l.GenToken(now, l.svcCtx.Config.JwtAuth.AccessSecret, nil, accessExpire)
+
+		myredis.SetSinglekey("UserId", userExist.Id)
+		myredis.SetSinglekey("UserAccessToken", accessToken)
+		myredis.SetSinglekey("AccessExpire", now+accessExpire)
+		myredis.SetSinglekey("RefreshAfter", now+accessExpire/2)
+
 		return &types.LoginResp{
-			Name: req.Username,
+			Id:           userExist.Id,
+			Name:         req.Username,
+			AccessToken:  accessToken,
+			AccessExpire: now + accessExpire,
+			RefreshAfter: now + accessExpire/2,
 		}, nil
 	}
 
 	return
 }
 
-func getJwtToken(secretKey string, iat, seconds int64, payload string) (string, error) {
+func (l *LoginLogic) GenToken(iat int64, secretKey string, payloads map[string]interface{}, seconds int64) (string, error) {
 	claims := make(jwt.MapClaims)
 	claims["exp"] = iat + seconds
 	claims["iat"] = iat
-	claims["payload"] = payload
+	for k, v := range payloads {
+		claims[k] = v
+	}
+
 	token := jwt.New(jwt.SigningMethodHS256)
 	token.Claims = claims
+
 	return token.SignedString([]byte(secretKey))
 }

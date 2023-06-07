@@ -25,9 +25,8 @@ func NewCurdLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CurdLogic {
 
 func (l *CurdLogic) Curd(req *types.PayloadReq) (resp *types.TextResp, err error) {
 	// todo: add your logic here and delete this line
-
 	var u *model.User
 	u, _ = l.svcCtx.UserModel.FindOne(l.ctx, 1)
 	l.Logger.Info(u)
-	return
+	return &types.TextResp{Message: "success"}, nil
 }

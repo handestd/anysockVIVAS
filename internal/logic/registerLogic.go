@@ -31,7 +31,7 @@ func (l *RegisterLogic) Register(req *types.RegisterReq) (resp *types.RegisterRe
 	userExist, err := l.svcCtx.UserModel.FindByUsername(context.Background(), req.Username)
 
 	if err != nil {
-		return
+		// user no exist
 	}
 
 	if userExist == nil {
@@ -43,7 +43,6 @@ func (l *RegisterLogic) Register(req *types.RegisterReq) (resp *types.RegisterRe
 			Balance:  req.Balance,
 			Email:    req.Email,
 		}
-
 		_, err = l.svcCtx.UserModel.Insert(l.ctx, u)
 		//l.Logger.Info(u)
 

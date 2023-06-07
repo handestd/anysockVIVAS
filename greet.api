@@ -4,66 +4,78 @@ info (
 	author: ""
 	email: ""
 )
-
 type (
-	// Define the request body of the login interface
+	PayloadReq {
+		Message string `json:"message"`
+	}
+	TextResp {
+		Message string `json:"message"`
+	}
+)
+type (
+	profileReq {
+
+	}
+	profileResp {
+		Username string `json:username`
+		Email string `json:email`
+		Balance string `json:Balance`
+	}
+)
+type (
 	RegisterReq {
 		Username string `json:"username"`
 		Password string `json:"password"`
 		Email    string `json:"email"`
 		Balance  int64  `json:"balance"`
 	}
-	// Define the response body of the login interface
 	RegisterResp {
 		Id           int64  `json:"id"`
 		Name         string `json:"name"`
-		Token        string `json:"token"`
-		ExpireAt     string `json:"expireAt"`
 		ErrorMessage string `json:"errorMessage"`
 	}
 )
 
 type (
-	// Define the request body of the login interface
-	PayloadReq {
-		Message string `json:"message"`
-	}
-	// Define the response body of the login interface
-	TextResp {
-		Message string `json:"message"`
-	}
-)
-
-type (
-	// Define the request body of the login interface
 	LoginReq {
 		Username string `json:"username"`
 		Password string `json:"password"`
 	}
-	// Define the response body of the login interface
+
 	LoginResp {
 		Id           int64  `json:"id"`
 		Name         string `json:"name"`
-		Token        string `json:"token"`
-		ExpireAt     string `json:"expireAt"`
+		AccessToken  string `json:"access_token"`
+		AccessExpire int64  `json:"access_expire"`
+		RefreshAfter int64  `json:"refresh_after"`
 		ErrorMessage string `json:"errorMessage"`
 	}
 )
-@server (
-	jwt: Auth // Enable jwt authentication
-	middleware:example
-)
+
 service user {
-	@handler curd
-	get /curd (PayloadReq) returns (TextResp)
-}
-service userLogin {
-	// Define the name and method of the go file converted by http.HandleFunc
 	@handler Login
 	post /user/login (LoginReq) returns (LoginResp)
 
 	@handler Register
 	post /user/register (RegisterReq) returns (RegisterResp)
-	// Define an HTTP service
-	// The name of the microservice is user, and the generated code directory and configuration file will be related to the value of user
+
+	@handler TestSetRedis
+	get /test/setredis (PayloadReq) returns (TextResp)
+
+	@handler TestGetRedis
+	get /test/getredis (PayloadReq) returns (TextResp)
+}
+
+@server(
+	jwt: JwtAuth
+)
+service user {
+	@handler curd
+	get /curd (PayloadReq) returns (TextResp)
+
+	@handler Profile
+	get /profile (PayloadReq) returns (TextResp)
+
+	@handler ShowAll
+	get /showall (PayloadReq) returns (TextResp)
 }
