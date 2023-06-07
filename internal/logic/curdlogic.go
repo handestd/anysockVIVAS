@@ -2,11 +2,9 @@ package logic
 
 import (
 	"anysock/internal/model"
-	"context"
-	"github.com/zeromicro/go-zero/core/stores/sqlx"
-
 	"anysock/internal/svc"
 	"anysock/internal/types"
+	"context"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -27,13 +25,9 @@ func NewCurdLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CurdLogic {
 
 func (l *CurdLogic) Curd(req *types.PayloadReq) (resp *types.TextResp, err error) {
 	// todo: add your logic here and delete this line
-	dsn := "root:@tcp(localhost:3306)/anysock?charset=utf8mb4&parseTime=True&loc=Local"
-	conn := sqlx.NewMysql(dsn)
 
-	var u model.User
-	query := "select id, username from user where id=?"
-	err = conn.QueryRowCtx(context.Background(), &u, query, 1)
-
+	var u *model.User
+	u, _ = l.svcCtx.UserModel.FindOne(l.ctx, 1)
 	l.Logger.Info(u)
 	return
 }

@@ -4,13 +4,16 @@ package types
 type RegisterReq struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
+	Email    string `json:"email"`
+	Balance  int64  `json:"balance"`
 }
 
 type RegisterResp struct {
-	Id       int64  `json:"id"`
-	Name     string `json:"name"`
-	Token    string `json:"token"`
-	ExpireAt string `json:"expireAt"`
+	Id           int64  `json:"id"`
+	Name         string `json:"name"`
+	Token        string `json:"token"`
+	ExpireAt     string `json:"expireAt"`
+	ErrorMessage string `json:"errorMessage"`
 }
 
 type PayloadReq struct {
@@ -27,8 +30,9 @@ type LoginReq struct {
 }
 
 type LoginResp struct {
-	Id       int64  `json:"id"`
-	Name     string `json:"name"`
-	Token    string `json:"token"`
-	ExpireAt string `json:"expireAt"`
+	Id           int64  `json:"id"`
+	Name         string `json:"name"`
+	Token        string `json:"token"`
+	ExpireAt     string `json:"expireAt"`
+	ErrorMessage string `json:"errorMessage"`
 }

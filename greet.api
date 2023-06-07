@@ -10,13 +10,16 @@ type (
 	RegisterReq {
 		Username string `json:"username"`
 		Password string `json:"password"`
+		Email    string `json:"email"`
+		Balance  int64  `json:"balance"`
 	}
 	// Define the response body of the login interface
 	RegisterResp {
-		Id       int64  `json:"id"`
-		Name     string `json:"name"`
-		Token    string `json:"token"`
-		ExpireAt string `json:"expireAt"`
+		Id           int64  `json:"id"`
+		Name         string `json:"name"`
+		Token        string `json:"token"`
+		ExpireAt     string `json:"expireAt"`
+		ErrorMessage string `json:"errorMessage"`
 	}
 )
 
@@ -39,24 +42,28 @@ type (
 	}
 	// Define the response body of the login interface
 	LoginResp {
-		Id       int64  `json:"id"`
-		Name     string `json:"name"`
-		Token    string `json:"token"`
-		ExpireAt string `json:"expireAt"`
+		Id           int64  `json:"id"`
+		Name         string `json:"name"`
+		Token        string `json:"token"`
+		ExpireAt     string `json:"expireAt"`
+		ErrorMessage string `json:"errorMessage"`
 	}
 )
-
-// Define an HTTP service
-// The name of the microservice is user, and the generated code directory and configuration file will be related to the value of user
+@server (
+	jwt: Auth // Enable jwt authentication
+	middleware:example
+)
 service user {
+	@handler curd
+	get /curd (PayloadReq) returns (TextResp)
+}
+service userLogin {
 	// Define the name and method of the go file converted by http.HandleFunc
 	@handler Login
-
 	post /user/login (LoginReq) returns (LoginResp)
 
 	@handler Register
 	post /user/register (RegisterReq) returns (RegisterResp)
-
-	@handler curd
-	get /curd (PayloadReq) returns (TextResp)
+	// Define an HTTP service
+	// The name of the microservice is user, and the generated code directory and configuration file will be related to the value of user
 }
