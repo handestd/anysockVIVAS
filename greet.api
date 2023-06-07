@@ -13,13 +13,18 @@ type (
 	}
 )
 type (
-	profileReq {
-
+	getUserReq {
 	}
-	profileResp {
-		Username string `json:username`
-		Email string `json:email`
-		Balance string `json:Balance`
+	getUserResp {
+		Username string `json:"username""`
+		Email    string `json:"email""`
+		Balance  string `json:"balance"`
+	}
+
+	getUsersReq {
+	}
+	getUsersResp {
+		Users getUserResp `json:"users"`
 	}
 )
 type (
@@ -73,9 +78,9 @@ service user {
 	@handler curd
 	get /curd (PayloadReq) returns (TextResp)
 
-	@handler Profile
-	get /profile (PayloadReq) returns (TextResp)
+	@handler GetUser
+	get /getuser (getUserReq) returns (getUserResp)
 
-	@handler ShowAll
-	get /showall (PayloadReq) returns (TextResp)
+	@handler GetUsers
+	get /getusers (getUsersReq) returns (getUsersResp)
 }
