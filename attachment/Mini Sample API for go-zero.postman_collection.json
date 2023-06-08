@@ -1,0 +1,93 @@
+{
+	"info": {
+		"_postman_id": "a1e6d7dd-04e0-4382-ad1e-1636ccfa4376",
+		"name": "Mini Sample API for go-zero",
+		"description": "Just some easy API endpoint ^^",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "2225644"
+	},
+	"item": [
+		{
+			"name": "Sign Up",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"tiendat3\",\r\n    \"password\": \"123456\",\r\n    \"email\": \"handestd@gmail.com\",\r\n    \"balance\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "0.0.0.0:8888/user/register"
+			},
+			"response": []
+		},
+		{
+			"name": "Sign In",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"tiendat1\",\r\n    \"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "0.0.0.0:8888/user/login"
+			},
+			"response": []
+		},
+		{
+			"name": "Test Set Redis",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Get User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODY3MzQxNjgsImlhdCI6MTY4NjEyOTM2OH0.Omq2D2CvbMwseUbgutkxVZrZKyHEaj3MxDo1SNgys1U"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "0.0.0.0:8888/getuser"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Users",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODY3MzQxNjgsImlhdCI6MTY4NjEyOTM2OH0.Omq2D2CvbMwseUbgutkxVZrZKyHEaj3MxDo1SNgys1U"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "0.0.0.0:8888/getuser"
+			},
+			"response": []
+		},
+		{
+			"name": "Test Random User",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
