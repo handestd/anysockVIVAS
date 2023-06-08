@@ -79,8 +79,8 @@ service user {
 	get /curd (PayloadReq) returns (TextResp)
 
 	@handler GetUser
-	get /getuser (getUserReq) returns (GetUserResp)
+	get /user (getUserReq) returns (GetUserResp)
 
 	@handler GetUsers
-	get /getusers (getUsersReq) returns (getUsersResp)
+	get /users (getUsersReq) returns (getUsersResp)
 }

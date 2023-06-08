@@ -1,12 +1,12 @@
 package handler
 
 import (
-	"net/http"
-
 	"anysock/internal/logic"
-	"anysock/internal/svc"
 	"anysock/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"
+	"net/http"
+
+	"anysock/internal/svc"
 )
 
 func GetUserHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {

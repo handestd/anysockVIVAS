@@ -37,7 +37,8 @@ func (l *GetUsersLogic) GetUsers(req *types.GetUsersReq) (resp *types.GetUsersRe
 	}
 	//l.Logger.Info(u)
 
-	var users []types.
+	var users []types.GetUserResp
+	//user2 := make([]types.GetUserResp,0) slice
 	for _, v := range u {
 		users = append(users, types.GetUserResp{Username: v.Username, Email: v.Email, Balance: v.Balance})
 	}
@@ -46,5 +47,5 @@ func (l *GetUsersLogic) GetUsers(req *types.GetUsersReq) (resp *types.GetUsersRe
 		Users: users,
 	}, nil
 
-	return
+	//return
 }
