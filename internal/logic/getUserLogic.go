@@ -1,15 +1,13 @@
 package logic
 
 import (
+	ErrorEntity "anysock/internal/error"
 	"anysock/internal/model"
+	"anysock/internal/svc"
+	"anysock/internal/types"
 	"anysock/pkg"
 	"anysock/pkg/myredis"
 	"context"
-	"fmt"
-
-	"anysock/internal/svc"
-	"anysock/internal/types"
-
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -39,18 +37,17 @@ func (l *GetUserLogic) GetUser(req *types.GetUserReq) (resp *types.GetUserResp, 
 		u, err2 := l.svcCtx.UserModel.FindOne(context.Background(), UserIdInt)
 
 		if err2 != nil {
-			message := err2.Error()
-			fmt.Println(message)
+			// invalid user id error
+			return &types.GetUserResp{}, ErrorEntity.RecordNotFound.Error
 		}
-		l.Logger.Info(u)
+		//l.Logger.Info(u)
 
 		return &types.GetUserResp{
 			Username: u.Username,
 			Email:    u.Email,
 			Balance:  u.Balance,
 		}, nil
-
+	} else {
+		return &types.GetUserResp{}, ErrorEntity.InValidUserID.Error
 	}
-
-	return
 }

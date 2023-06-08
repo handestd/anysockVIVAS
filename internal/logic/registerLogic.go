@@ -1,13 +1,13 @@
 package logic
 
 import (
+	ErrorEntity "anysock/internal/error"
 	"anysock/internal/model"
 	"anysock/internal/svc"
 	"anysock/internal/types"
 	"context"
-	"golang.org/x/crypto/bcrypt"
-
 	"github.com/zeromicro/go-zero/core/logx"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type RegisterLogic struct {
@@ -52,8 +52,7 @@ func (l *RegisterLogic) Register(req *types.RegisterReq) (resp *types.RegisterRe
 
 		return &types.RegisterResp{Name: u.Username}, nil
 	} else {
-		return &types.RegisterResp{ErrorMessage: "User exist already!"}, nil
+		return &types.RegisterResp{ErrorMessage: ErrorEntity.UserExist.Message}, nil
 	}
 	//
-
 }

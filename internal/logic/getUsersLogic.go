@@ -1,13 +1,12 @@
 package logic
 
 import (
+	ErrorEntity "anysock/internal/error"
 	"anysock/internal/model"
-
-	"context"
-	"fmt"
-
 	"anysock/internal/svc"
 	"anysock/internal/types"
+	"context"
+	"fmt"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -41,6 +40,10 @@ func (l *GetUsersLogic) GetUsers(req *types.GetUsersReq) (resp *types.GetUsersRe
 	//user2 := make([]types.GetUserResp,0) slice
 	for _, v := range u {
 		users = append(users, types.GetUserResp{Username: v.Username, Email: v.Email, Balance: v.Balance})
+	}
+
+	if len(users) == 0 {
+		return &types.GetUsersResp{}, ErrorEntity.EmptyTable.Error
 	}
 
 	return &types.GetUsersResp{

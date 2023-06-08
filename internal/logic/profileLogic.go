@@ -25,6 +25,5 @@ func NewProfileLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ProfileLo
 
 func (l *ProfileLogic) Profile(req *types.PayloadReq) (resp *types.TextResp, err error) {
 	// todo: add your logic here and delete this line
-
 	return
 }

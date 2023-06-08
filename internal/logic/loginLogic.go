@@ -1,15 +1,15 @@
 package logic
 
 import (
+	ErrorEntity "anysock/internal/error"
+	"anysock/internal/svc"
+	"anysock/internal/types"
 	"anysock/pkg/myredis"
 	"context"
 	"github.com/golang-jwt/jwt/v4"
+	"github.com/zeromicro/go-zero/core/logx"
 	"golang.org/x/crypto/bcrypt"
 	"time"
-
-	"anysock/internal/svc"
-	"anysock/internal/types"
-	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type LoginLogic struct {
@@ -37,9 +37,8 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err erro
 	if userExist != nil {
 		err := bcrypt.CompareHashAndPassword([]byte(userExist.Password), []byte(req.Password))
 		if err != nil {
-			return &types.LoginResp{ErrorMessage: "User exist already!"}, nil
+			return &types.LoginResp{ErrorMessage: ErrorEntity.IncorrectPassword.Message}, nil
 		}
-
 		accessExpire := l.svcCtx.Config.JwtAuth.AccessExpire
 
 		now := time.Now().Unix()
