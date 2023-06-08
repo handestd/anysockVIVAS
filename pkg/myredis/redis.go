@@ -27,7 +27,7 @@ func SetSinglekey(key string, value interface{}) error {
 }
 func GetSingleKey(key string) (interface{}, error) {
 	ctx := context.Background()
-	val, err2 := Client.Get(ctx, "foo").Result()
+	val, err2 := Client.Get(ctx, key).Result()
 	if err2 != nil {
 		return nil, errors.New(err2.Error())
 	}

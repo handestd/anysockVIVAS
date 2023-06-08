@@ -44,13 +44,13 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodGet,
-				Path:    "/profile",
-				Handler: ProfileHandler(serverCtx),
+				Path:    "/getuser",
+				Handler: GetUserHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
-				Path:    "/showall",
-				Handler: ShowAllHandler(serverCtx),
+				Path:    "/getusers",
+				Handler: GetUsersHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),

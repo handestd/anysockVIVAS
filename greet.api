@@ -1,8 +1,8 @@
 info (
-	title: // TODO: add title
-	desc: // TODO: add description
-	author: ""
-	email: ""
+	title: "anysock system"// TODO: add title
+	desc: "simple api with go-zero"
+	author: "tiendat"
+	email: "handestd@gmail.com"
 )
 type (
 	PayloadReq {
@@ -15,16 +15,16 @@ type (
 type (
 	getUserReq {
 	}
-	getUserResp {
-		Username string `json:"username""`
-		Email    string `json:"email""`
-		Balance  string `json:"balance"`
+	GetUserResp {
+		Username string `json:"username"`
+		Email    string `json:"email"`
+		Balance  int64  `json:"balance"`
 	}
 
 	getUsersReq {
 	}
 	getUsersResp {
-		Users getUserResp `json:"users"`
+		Users []GetUserResp `json:"users"`
 	}
 )
 type (
@@ -79,7 +79,7 @@ service user {
 	get /curd (PayloadReq) returns (TextResp)
 
 	@handler GetUser
-	get /getuser (getUserReq) returns (getUserResp)
+	get /getuser (getUserReq) returns (GetUserResp)
 
 	@handler GetUsers
 	get /getusers (getUsersReq) returns (getUsersResp)

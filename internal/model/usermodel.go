@@ -16,6 +16,7 @@ type (
 	UserModel interface {
 		userModel
 		FindByUsername(ctx context.Context, username string) (*User, error)
+		GetUsers(ctx context.Context) ([]User, error)
 	}
 
 	customUserModel struct {
@@ -23,6 +24,20 @@ type (
 	}
 )
 
+func (m *defaultUserModel) GetUsers(ctx context.Context) ([]User, error) {
+	var resp []User
+	query := fmt.Sprintf("SELECT * FROM %v ;", m.table)
+	err := m.conn.QueryRowsCtx(ctx, &resp, query)
+	if resp == nil {
+		return nil, ErrNotFound
+	}
+	switch err {
+	case nil:
+		return resp, nil
+	default:
+		return nil, err
+	}
+}
 func (m *defaultUserModel) FindByUsername(ctx context.Context, username string) (*User, error) {
 	query := fmt.Sprintf("select %s from %s where `username` = ? limit 1", userRows, m.table)
 	var resp User

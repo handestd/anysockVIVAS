@@ -9,6 +9,22 @@ type TextResp struct {
 	Message string `json:"message"`
 }
 
+type GetUserReq struct {
+}
+
+type GetUserResp struct {
+	Username string `json:"username"`
+	Email    string `json:"email"`
+	Balance  int64  `json:"balance"`
+}
+
+type GetUsersReq struct {
+}
+
+type GetUsersResp struct {
+	Users []GetUserResp `json:"users"`
+}
+
 type RegisterReq struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
