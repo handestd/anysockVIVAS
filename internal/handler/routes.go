@@ -32,6 +32,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/test/getredis",
 				Handler: TestGetRedisHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/test/randomuser",
+				Handler: RandomUserHandler(serverCtx),
+			},
 		},
 	)
 

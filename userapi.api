@@ -7,7 +7,7 @@ info(
 )
 
 type (
-	// Define the request body of the login interface
+	// Define the httprequest body of the login interface
 	PayloadReq {
 		Message string `json:"message"`
 	}

@@ -9,6 +9,20 @@ type TextResp struct {
 	Message string `json:"message"`
 }
 
+type UserRandomReq struct {
+}
+
+type UserRandomResp struct {
+	Name       string `json:"name"`
+	Address    string `json:"address"`
+	City       string `json:"city"`
+	State      string `json:"state"`
+	PostalCode string `json:"postal_code"`
+	Email      string `json:"email"`
+	Password   string `json:"password"`
+	Phone      string `json:"phone"`
+}
+
 type GetUserReq struct {
 }
 
