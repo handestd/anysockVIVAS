@@ -44,10 +44,19 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err erro
 		now := time.Now().Unix()
 		accessToken, err := l.GenToken(now, l.svcCtx.Config.JwtAuth.AccessSecret, nil, accessExpire)
 
-		myredis.SetSinglekey("UserId", userExist.Id)
-		myredis.SetSinglekey("UserAccessToken", accessToken)
-		myredis.SetSinglekey("AccessExpire", now+accessExpire)
-		myredis.SetSinglekey("RefreshAfter", now+accessExpire/2)
+		//myredis.SetSinglekey("UserId", userExist.Id)
+		//myredis.SetSinglekey("UserAccessToken", accessToken)
+		//myredis.SetSinglekey("AccessExpire", now+accessExpire)
+		//myredis.SetSinglekey("RefreshAfter", now+accessExpire/2)
+
+		session := map[string]interface{}{
+			"UserId":          userExist.Id,
+			"UserAccessToken": accessToken,
+			"AccessExpire":    now + accessExpire,
+			"RefreshAfter":    now + accessExpire/2,
+		}
+
+		myredis.SetMultiple(session, "localUser")
 
 		return &types.LoginResp{
 			Id:           userExist.Id,

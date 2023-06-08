@@ -8,7 +8,7 @@ import (
 func Get(url string) []byte {
 	res, err := http.Get(url)
 	if err != nil {
-		return nil, err
+		return nil
 	}
 	defer res.Body.Close()
 	body, _ := io.ReadAll(res.Body)

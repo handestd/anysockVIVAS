@@ -5,10 +5,10 @@ import (
 	"anysock/internal/model"
 	"anysock/internal/svc"
 	"anysock/internal/types"
-	"anysock/pkg"
 	"anysock/pkg/myredis"
 	"context"
 	"github.com/zeromicro/go-zero/core/logx"
+	"strconv"
 )
 
 type GetUserLogic struct {
@@ -28,9 +28,11 @@ func NewGetUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUserLo
 func (l *GetUserLogic) GetUser(req *types.GetUserReq) (resp *types.GetUserResp, err error) {
 	// todo: add your logic here and delete this line
 
-	UserId, myerr := myredis.GetSingleKey("UserId")
+	//UserId, myerr := myredis.GetSingleKey("UserId")
 
-	UserIdInt, _ := pkg.InterfaceToInt64(UserId)
+	UserInfo := myredis.GetMultiple("localUser")
+	UserIdInt, myerr := strconv.ParseInt(UserInfo["UserId"], 10, 64)
+	//UserIdInt, _ := pkg.InterfaceToInt64(UserId)
 
 	if myerr == nil {
 		var u *model.User
