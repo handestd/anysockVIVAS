@@ -32,7 +32,8 @@ type
 )
 
 type (
-	getUserReq {
+	GetUserReq {
+		Id string `path:"id,optional"`
 	}
 	GetUserResp {
 		Username string `json:"username"`
@@ -40,9 +41,9 @@ type (
 		Balance  int64  `json:"balance"`
 	}
 
-	getUsersReq {
+	GetUsersReq {
 	}
-	getUsersResp {
+	GetUsersResp {
 		Users []GetUserResp `json:"users"`
 	}
 )
@@ -108,9 +109,13 @@ service user {
 	group: admin
 )
 service user {
+
+	@handler MyUser
+	get /user (GetUserReq) returns (GetUserResp)
+
 	@handler User
-	get /user (getUserReq) returns (GetUserResp)
+	get /user/:id (GetUserReq) returns (GetUserResp)
 
 	@handler Users
-	get /users (getUsersReq) returns (getUsersResp)
+	get /users (GetUsersReq) returns (GetUsersResp)
 }

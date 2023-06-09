@@ -24,6 +24,7 @@ type UserRandomResp struct {
 }
 
 type GetUserReq struct {
+	Id string `path:"id,optional"`
 }
 
 type GetUserResp struct {
