@@ -4,3 +4,10 @@ Port: 8888
 JwtAuth:
   AccessSecret: xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   AccessExpire: 604800
+MySqlConf:
+  User: root
+  Pass:
+  Host: localhost
+  Port: 3306
+  DbName: anysock
+  Parameter: charset=utf8mb4&parseTime=True&loc=Local

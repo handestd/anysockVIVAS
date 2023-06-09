@@ -1,24 +1,24 @@
-package test
+package admin
 
 import (
 	"net/http"
 
-	"anysock/internal/logic/test"
+	"anysock/internal/logic/admin"
 	"anysock/internal/svc"
 	"anysock/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
-func TestSetRedisHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func UsersHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.PayloadReq
+		var req types.GetUsersReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
 
-		l := test.NewTestSetRedisLogic(r.Context(), svcCtx)
-		resp, err := l.TestSetRedis(&req)
+		l := admin.NewUsersLogic(r.Context(), svcCtx)
+		resp, err := l.Users(&req)
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {

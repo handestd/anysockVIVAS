@@ -4,7 +4,7 @@ import (
 	"anysock/internal/config"
 	"anysock/internal/handler"
 	"anysock/internal/svc"
-	"anysock/pkg/myredis"
+	"anysock/pkg/cache"
 	"flag"
 	"fmt"
 	"github.com/zeromicro/go-zero/core/conf"
@@ -15,7 +15,7 @@ var configFile = flag.String("f", "etc/user.yaml", "the config file")
 
 func main() {
 
-	myredis.Connect()
+	cache.Connect()
 
 	flag.Parse()
 

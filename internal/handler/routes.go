@@ -4,6 +4,7 @@ package handler
 import (
 	"net/http"
 
+	admin "anysock/internal/handler/admin"
 	test "anysock/internal/handler/test"
 	user "anysock/internal/handler/user"
 	"anysock/internal/svc"
@@ -33,12 +34,12 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			{
 				Method:  http.MethodGet,
 				Path:    "/test/setredis",
-				Handler: test.TestSetRedisHandler(serverCtx),
+				Handler: test.SetRedisHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
 				Path:    "/test/getredis",
-				Handler: test.TestGetRedisHandler(serverCtx),
+				Handler: test.GetRedisHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
@@ -53,18 +54,13 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodGet,
-				Path:    "/curd",
-				Handler: curdHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodGet,
-				Path:    "/user/:id",
-				Handler: GetUserHandler(serverCtx),
+				Path:    "/user",
+				Handler: admin.UserHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
 				Path:    "/users",
-				Handler: GetUsersHandler(serverCtx),
+				Handler: admin.UsersHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),

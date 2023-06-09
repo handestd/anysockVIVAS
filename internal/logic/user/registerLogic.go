@@ -1,7 +1,10 @@
 package user
 
 import (
+	error_entity "anysock/internal/error"
+	"anysock/internal/model"
 	"context"
+	"golang.org/x/crypto/bcrypt"
 
 	"anysock/internal/svc"
 	"anysock/internal/types"
@@ -24,7 +27,31 @@ func NewRegisterLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Register
 }
 
 func (l *RegisterLogic) Register(req *types.RegisterReq) (resp *types.RegisterResp, err error) {
-	// todo: add your logic here and delete this line
+	userExist, err := l.svcCtx.UserModel.FindByUsername(context.Background(), req.Username)
 
+	if err != nil {
+		// user no exist
+	}
+
+	if userExist == nil {
+		password, _ := bcrypt.GenerateFromPassword([]byte(req.Password), 14)
+
+		u := &model.User{
+			Username: req.Username,
+			Password: string(password),
+			Balance:  req.Balance,
+			Email:    req.Email,
+		}
+		_, err = l.svcCtx.UserModel.Insert(l.ctx, u)
+		//l.Logger.Info(u)
+
+		if err != nil {
+			return
+		}
+
+		return &types.RegisterResp{Name: u.Username}, nil
+	} else {
+		return &types.RegisterResp{ErrorMessage: error_entity.UserExist.Message}, nil
+	}
 	return
 }

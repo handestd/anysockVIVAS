@@ -1,7 +1,7 @@
-package logic
+package admin
 
 import (
-	ErrorEntity "anysock/internal/error"
+	error_entity "anysock/internal/error"
 	"anysock/internal/model"
 	"anysock/internal/svc"
 	"anysock/internal/types"
@@ -11,22 +11,21 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type GetUsersLogic struct {
+type UsersLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewGetUsersLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUsersLogic {
-	return &GetUsersLogic{
+func NewUsersLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UsersLogic {
+	return &UsersLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *GetUsersLogic) GetUsers(req *types.GetUsersReq) (resp *types.GetUsersResp, err error) {
-
+func (l *UsersLogic) Users(req *types.GetUsersReq) (resp *types.GetUsersResp, err error) {
 	var u []model.User
 	u, err2 := l.svcCtx.UserModel.GetUsers(context.Background())
 
@@ -43,12 +42,11 @@ func (l *GetUsersLogic) GetUsers(req *types.GetUsersReq) (resp *types.GetUsersRe
 	}
 
 	if len(users) == 0 {
-		return &types.GetUsersResp{}, ErrorEntity.EmptyTable.Error
+		return &types.GetUsersResp{}, error_entity.EmptyTable.Error
 	}
 
 	return &types.GetUsersResp{
 		Users: users,
 	}, nil
 
-	//return
 }

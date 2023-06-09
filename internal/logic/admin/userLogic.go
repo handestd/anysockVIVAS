@@ -1,36 +1,33 @@
-package logic
+package admin
 
 import (
-	ErrorEntity "anysock/internal/error"
+	error_entity "anysock/internal/error"
 	"anysock/internal/model"
 	"anysock/internal/svc"
 	"anysock/internal/types"
-	"anysock/pkg/myredis"
+	"anysock/pkg/cache"
 	"context"
-	"github.com/zeromicro/go-zero/core/logx"
 	"strconv"
+
+	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type GetUserLogic struct {
+type UserLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewGetUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUserLogic {
-	return &GetUserLogic{
+func NewUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserLogic {
+	return &UserLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *GetUserLogic) GetUser(req *types.GetUserReq) (resp *types.GetUserResp, err error) {
-	// todo: add your logic here and delete this line
-
-	//UserId, myerr := myredis.GetSingleKey("UserId")
-
-	UserInfo := myredis.GetMultiple("localUser")
+func (l *UserLogic) User(req *types.GetUserReq) (resp *types.GetUserResp, err error) {
+	UserInfo := cache.GetMultiple("localUser")
 	UserIdInt, myerr := strconv.ParseInt(UserInfo["UserId"], 10, 64)
 	//UserIdInt, _ := pkg.InterfaceToInt64(UserId)
 
@@ -40,7 +37,7 @@ func (l *GetUserLogic) GetUser(req *types.GetUserReq) (resp *types.GetUserResp, 
 
 		if err2 != nil {
 			// invalid user id error
-			return &types.GetUserResp{}, ErrorEntity.RecordNotFound.Error
+			return &types.GetUserResp{}, error_entity.RecordNotFound.Error
 		}
 		//l.Logger.Info(u)
 
@@ -50,6 +47,8 @@ func (l *GetUserLogic) GetUser(req *types.GetUserReq) (resp *types.GetUserResp, 
 			Balance:  u.Balance,
 		}, nil
 	} else {
-		return &types.GetUserResp{}, ErrorEntity.InValidUserID.Error
+		return &types.GetUserResp{}, error_entity.InValidUserID.Error
 	}
+
+	return
 }

@@ -1,4 +1,4 @@
-package myredis
+package cache
 
 import (
 	"context"

@@ -1,4 +1,4 @@
-package logic
+package test
 
 import (
 	"context"
@@ -9,21 +9,21 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type TestGetRedisLogic struct {
+type GetRedisLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewTestGetRedisLogic(ctx context.Context, svcCtx *svc.ServiceContext) *TestGetRedisLogic {
-	return &TestGetRedisLogic{
+func NewGetRedisLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetRedisLogic {
+	return &GetRedisLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *TestGetRedisLogic) TestGetRedis(req *types.PayloadReq) (resp *types.TextResp, err error) {
+func (l *GetRedisLogic) GetRedis(req *types.PayloadReq) (resp *types.TextResp, err error) {
 	// todo: add your logic here and delete this line
 
 	return

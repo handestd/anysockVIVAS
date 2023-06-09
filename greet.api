@@ -73,7 +73,6 @@ type (
 		AccessToken  string `json:"access_token"`
 		AccessExpire int64  `json:"access_expire"`
 		RefreshAfter int64  `json:"refresh_after"`
-
 		ErrorMessage string `json:"errorMessage"`
 	}
 )
@@ -94,10 +93,10 @@ service user {
 	group: test
 )
 service user {
-	@handler TestSetRedis
+	@handler SetRedis
 	get /test/setredis (PayloadReq) returns (TextResp)
 
-	@handler TestGetRedis
+	@handler GetRedis
 	get /test/getredis (PayloadReq) returns (TextResp)
 
 	@handler RandomUser
@@ -106,14 +105,12 @@ service user {
 
 @server(
 	jwt: JwtAuth
+	group: admin
 )
 service user {
-	@handler curd
-	get /curd (PayloadReq) returns (TextResp)
+	@handler User
+	get /user (getUserReq) returns (GetUserResp)
 
-	@handler GetUser
-	get /user/:id (getUserReq) returns (GetUserResp)
-
-	@handler GetUsers
+	@handler Users
 	get /users (getUsersReq) returns (getUsersResp)
 }

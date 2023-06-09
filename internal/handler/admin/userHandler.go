@@ -1,24 +1,24 @@
-package handler
+package admin
 
 import (
 	"net/http"
 
-	"anysock/internal/logic"
+	"anysock/internal/logic/admin"
 	"anysock/internal/svc"
 	"anysock/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
-func ShowAllHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func UserHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.PayloadReq
+		var req types.GetUserReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
 
-		l := logic.NewShowAllLogic(r.Context(), svcCtx)
-		resp, err := l.ShowAll(&req)
+		l := admin.NewUserLogic(r.Context(), svcCtx)
+		resp, err := l.User(&req)
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {

@@ -1,24 +1,24 @@
-package handler
+package test
 
 import (
-	"anysock/internal/logic"
-	"anysock/internal/types"
-	"github.com/zeromicro/go-zero/rest/httpx"
 	"net/http"
 
+	"anysock/internal/logic/test"
 	"anysock/internal/svc"
+	"anysock/internal/types"
+	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
-func GetUserHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func SetRedisHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.GetUserReq
+		var req types.PayloadReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
 
-		l := logic.NewGetUserLogic(r.Context(), svcCtx)
-		resp, err := l.GetUser(&req)
+		l := test.NewSetRedisLogic(r.Context(), svcCtx)
+		resp, err := l.SetRedis(&req)
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {
