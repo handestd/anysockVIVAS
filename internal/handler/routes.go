@@ -38,6 +38,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: RandomUserHandler(serverCtx),
 			},
 		},
+		rest.WithPrefix("/v1"),
 	)
 
 	server.AddRoutes(
@@ -49,7 +50,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodGet,
-				Path:    "/user",
+				Path:    "/user/:id",
 				Handler: GetUserHandler(serverCtx),
 			},
 			{

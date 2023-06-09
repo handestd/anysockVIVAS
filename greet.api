@@ -46,6 +46,7 @@ type (
 		Users []GetUserResp `json:"users"`
 	}
 )
+
 type (
 	RegisterReq {
 		Username string `json:"username"`
@@ -72,10 +73,13 @@ type (
 		AccessToken  string `json:"access_token"`
 		AccessExpire int64  `json:"access_expire"`
 		RefreshAfter int64  `json:"refresh_after"`
+
 		ErrorMessage string `json:"errorMessage"`
 	}
 )
-
+@server (
+	prefix: /v1
+)
 service user {
 	@handler Login
 	post /user/login (LoginReq) returns (LoginResp)
@@ -101,7 +105,7 @@ service user {
 	get /curd (PayloadReq) returns (TextResp)
 
 	@handler GetUser
-	get /user (getUserReq) returns (GetUserResp)
+	get /user/:id (getUserReq) returns (GetUserResp)
 
 	@handler GetUsers
 	get /users (getUsersReq) returns (getUsersResp)

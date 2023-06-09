@@ -14,7 +14,6 @@ func Connect() {
 		Password: "", // no password set
 		DB:       0,  // use default DB
 	})
-
 }
 
 func SetSinglekey(key string, value interface{}) error {
