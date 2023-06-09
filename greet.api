@@ -79,6 +79,7 @@ type (
 )
 @server (
 	prefix: /v1
+	group: user
 )
 service user {
 	@handler Login
@@ -86,7 +87,13 @@ service user {
 
 	@handler Register
 	post /user/register (RegisterReq) returns (RegisterResp)
+}
 
+@server (
+	prefix: /v1
+	group: test
+)
+service user {
 	@handler TestSetRedis
 	get /test/setredis (PayloadReq) returns (TextResp)
 

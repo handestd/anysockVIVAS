@@ -4,6 +4,8 @@ package handler
 import (
 	"net/http"
 
+	test "anysock/internal/handler/test"
+	user "anysock/internal/handler/user"
 	"anysock/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -15,27 +17,33 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			{
 				Method:  http.MethodPost,
 				Path:    "/user/login",
-				Handler: LoginHandler(serverCtx),
+				Handler: user.LoginHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
 				Path:    "/user/register",
-				Handler: RegisterHandler(serverCtx),
+				Handler: user.RegisterHandler(serverCtx),
 			},
+		},
+		rest.WithPrefix("/v1"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
 			{
 				Method:  http.MethodGet,
 				Path:    "/test/setredis",
-				Handler: TestSetRedisHandler(serverCtx),
+				Handler: test.TestSetRedisHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
 				Path:    "/test/getredis",
-				Handler: TestGetRedisHandler(serverCtx),
+				Handler: test.TestGetRedisHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
 				Path:    "/test/randomuser",
-				Handler: RandomUserHandler(serverCtx),
+				Handler: test.RandomUserHandler(serverCtx),
 			},
 		},
 		rest.WithPrefix("/v1"),
