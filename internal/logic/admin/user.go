@@ -32,9 +32,10 @@ func User(req *types.GetUserReq, l *MyUserLogic) (resp *types.GetUserResp, err e
 		//l.Logger.Info(u)
 
 		return &types.GetUserResp{
-			Username: u.Username,
-			Email:    u.Email,
-			Balance:  u.Balance,
+			Username:  u.Username,
+			Email:     u.Email,
+			Balance:   u.Balance,
+			UserAgent: l.ctx.Value("User-Agent").(string),
 		}, nil
 	} else {
 		return &types.GetUserResp{}, error_entity.InValidUserID.Error

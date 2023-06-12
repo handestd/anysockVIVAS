@@ -36,9 +36,10 @@ type (
 		Id string `path:"id,optional"`
 	}
 	GetUserResp {
-		Username string `json:"username"`
-		Email    string `json:"email"`
-		Balance  int64  `json:"balance"`
+		Username  string `json:"username"`
+		Email     string `json:"email"`
+		Balance   int64  `json:"balance"`
+		UserAgent string `json:"useragent"`
 	}
 
 	GetUsersReq {
@@ -107,6 +108,7 @@ service user {
 @server(
 	jwt: JwtAuth
 	group: admin
+	middleware: UserAgentMiddleware,LogMiddleware
 )
 service user {
 

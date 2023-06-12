@@ -2,15 +2,19 @@ package svc
 
 import (
 	"anysock/internal/config"
+	"anysock/internal/middleware"
 	"anysock/internal/model"
 	"fmt"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
+	"github.com/zeromicro/go-zero/rest"
 	"strconv"
 )
 
 type ServiceContext struct {
-	Config    config.Config
-	UserModel model.UserModel
+	Config              config.Config
+	UserModel           model.UserModel
+	UserAgentMiddleware rest.Middleware
+	LogMiddleware       rest.Middleware
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -21,6 +25,8 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	return &ServiceContext{
 		Config: c,
 		//UserModel: model.NewUserModel(sqlx.NewMysql("root:@tcp(localhost:3306)/anysock?charset=utf8mb4&parseTime=True&loc=Local")),
-		UserModel: model.NewUserModel(sqlx.NewMysql(dataSource)),
+		UserModel:           model.NewUserModel(sqlx.NewMysql(dataSource)),
+		UserAgentMiddleware: middleware.NewUserAgentMiddleware().Handle,
+		LogMiddleware:       middleware.NewLogMiddleware().Handle,
 	}
 }

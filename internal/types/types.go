@@ -28,9 +28,10 @@ type GetUserReq struct {
 }
 
 type GetUserResp struct {
-	Username string `json:"username"`
-	Email    string `json:"email"`
-	Balance  int64  `json:"balance"`
+	Username  string `json:"username"`
+	Email     string `json:"email"`
+	Balance   int64  `json:"balance"`
+	UserAgent string `json:"useragent"`
 }
 
 type GetUsersReq struct {

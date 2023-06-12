@@ -51,23 +51,26 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	)
 
 	server.AddRoutes(
-		[]rest.Route{
-			{
-				Method:  http.MethodGet,
-				Path:    "/user",
-				Handler: admin.MyUserHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodGet,
-				Path:    "/user/:id",
-				Handler: admin.UserHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodGet,
-				Path:    "/users",
-				Handler: admin.UsersHandler(serverCtx),
-			},
-		},
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.UserAgentMiddleware, serverCtx.LogMiddleware},
+			[]rest.Route{
+				{
+					Method:  http.MethodGet,
+					Path:    "/user",
+					Handler: admin.MyUserHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodGet,
+					Path:    "/user/:id",
+					Handler: admin.UserHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodGet,
+					Path:    "/users",
+					Handler: admin.UsersHandler(serverCtx),
+				},
+			}...,
+		),
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
 	)
 }
