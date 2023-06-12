@@ -4,8 +4,9 @@ info (
 	author: "tiendat"
 	email: "handestd@gmail.com"
 )
+
 type (
-	PayloadReq {
+	EmptyReq {
 		Message string `json:"message"`
 	}
 	TextResp {
@@ -54,7 +55,6 @@ type (
 		Username string `json:"username"`
 		Password string `json:"password"`
 		Email    string `json:"email"`
-		Balance  int64  `json:"balance"`
 	}
 	RegisterResp {
 		Id           int64  `json:"id"`
@@ -88,6 +88,9 @@ service user {
 
 	@handler Register
 	post /user/register (RegisterReq) returns (RegisterResp)
+
+	@handler Logout
+	post /user/logout (EmptyReq) returns (TextResp)
 }
 
 @server (
@@ -96,10 +99,10 @@ service user {
 )
 service user {
 	@handler SetRedis
-	get /test/setredis (PayloadReq) returns (TextResp)
+	get /test/setredis (EmptyReq) returns (TextResp)
 
 	@handler GetRedis
-	get /test/getredis (PayloadReq) returns (TextResp)
+	get /test/getredis (EmptyReq) returns (TextResp)
 
 	@handler RandomUser
 	get /test/randomuser (UserRandomReq) returns (UserRandomResp)

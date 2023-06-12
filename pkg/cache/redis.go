@@ -33,11 +33,11 @@ func GetSingleKey(key string) (interface{}, error) {
 	return val, nil
 }
 
-func SetMultiple(session map[string]interface{}, keyName string) {
-	ctx := context.Background()
+func SetMultiple(ctx context.Context, session map[string]interface{}, keyName string) {
 
 	for k, v := range session {
 		err := Client.HSet(ctx, keyName, k, v).Err()
+
 		if err != nil {
 			panic(err)
 		}

@@ -26,27 +26,30 @@ func NewUsersLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UsersLogic 
 }
 
 func (l *UsersLogic) Users(req *types.GetUsersReq) (resp *types.GetUsersResp, err error) {
-	var u []model.User
-	u, err2 := l.svcCtx.UserModel.GetUsers(context.Background())
+	// sua lai cach dat ten bien
+	var users []model.User
 
-	if err2 != nil {
-		message := err2.Error()
+	// dat chung bien trong 1 scope
+	users, err = l.svcCtx.UserModel.GetUsers(context.Background())
+
+	if err != nil {
+		message := err.Error()
 		fmt.Println(message)
 	}
+	// tim hieu cach su dung logger
 	//l.Logger.Info(u)
 
-	var users []types.GetUserResp
+	var usersResp []types.GetUserResp
 	//user2 := make([]types.GetUserResp,0) slice
-	for _, v := range u {
-		users = append(users, types.GetUserResp{Username: v.Username, Email: v.Email, Balance: v.Balance})
+	for _, v := range users {
+		usersResp = append(usersResp, types.GetUserResp{Username: v.Username, Email: v.Email, Balance: v.Balance})
 	}
 
-	if len(users) == 0 {
+	if len(usersResp) == 0 {
 		return &types.GetUsersResp{}, error_entity.EmptyTable.Error
 	}
 
 	return &types.GetUsersResp{
-		Users: users,
+		Users: usersResp,
 	}, nil
-
 }

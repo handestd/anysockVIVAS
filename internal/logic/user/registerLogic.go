@@ -39,7 +39,6 @@ func (l *RegisterLogic) Register(req *types.RegisterReq) (resp *types.RegisterRe
 		u := &model.User{
 			Username: req.Username,
 			Password: string(password),
-			Balance:  req.Balance,
 			Email:    req.Email,
 		}
 		_, err = l.svcCtx.UserModel.Insert(l.ctx, u)

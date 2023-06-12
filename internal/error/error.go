@@ -1,6 +1,7 @@
 package error
 
 import (
+	"encoding/json"
 	"errors"
 )
 
@@ -12,6 +13,14 @@ type Error struct {
 
 func NewError(code int, message string) *Error {
 	return &Error{Code: code, Message: message, Error: errors.New(message)}
+}
+func JsonError(code int, message string) string {
+	json, err := json.Marshal(&Error{Code: code, Message: message})
+	if err != nil {
+		return err.Error()
+	} else {
+		return string(json)
+	}
 }
 
 func ExposeError(err error, es ...*Error) *Error {
@@ -33,4 +42,7 @@ var (
 	InValidUserID     = NewError(7, "Invalid User ID")
 	RecordNotFound    = NewError(8, "Record Not Found")
 	EmptyTable        = NewError(9, "Empty Table")
+)
+var (
+	LoginRequired = JsonError(401, "Login Required")
 )
