@@ -36,6 +36,7 @@ func GetSingleKey(key string) (interface{}, error) {
 func DelKey(key string, ctx context.Context) (int64, error) {
 	return Client.Del(ctx, key).Result()
 }
+
 func SetMultiple(ctx context.Context, session map[string]interface{}, keyName string) {
 
 	for k, v := range session {

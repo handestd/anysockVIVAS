@@ -101,9 +101,9 @@ func (l *LoginLogic) CreateUserSession(w http.ResponseWriter, user model.User) e
 
 	// convert struct to map
 	dataUser = map[string]interface{}{
-		"id":         user.Id,
-		"session-id": user.Username,
-		"auth":       true,
+		"id":       user.Id,
+		"username": user.Username,
+		"auth":     true,
 	}
 
 	cache.SetMultiple(ctx, dataUser, sessionID)
