@@ -89,8 +89,6 @@ service user {
 	@handler Register
 	post /user/register (RegisterReq) returns (RegisterResp)
 
-	@handler Logout
-	post /user/logout (EmptyReq) returns (TextResp)
 }
 
 @server (
@@ -123,4 +121,8 @@ service user {
 
 	@handler Users
 	get /users (GetUsersReq) returns (GetUsersResp)
+
+	@handler Logout
+	post /user/logout (EmptyReq) returns (TextResp)
+
 }

@@ -25,11 +25,6 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/user/register",
 				Handler: user.RegisterHandler(serverCtx),
 			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/user/logout",
-				Handler: user.LogoutHandler(serverCtx),
-			},
 		},
 		rest.WithPrefix("/v1"),
 	)
@@ -73,6 +68,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Method:  http.MethodGet,
 					Path:    "/users",
 					Handler: admin.UsersHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/user/logout",
+					Handler: admin.LogoutHandler(serverCtx),
 				},
 			}...,
 		),

@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"github.com/redis/go-redis/v9"
+	"time"
 )
 
 var Client *redis.Client
@@ -16,9 +17,9 @@ func Connect() {
 	})
 }
 
-func SetSinglekey(key string, value interface{}) error {
+func SetSinglekey(key string, value interface{}, expiration time.Duration) error {
 	ctx := context.Background()
-	err2 := Client.Set(ctx, key, value, 0).Err()
+	err2 := Client.Set(ctx, key, value, expiration).Err()
 	if err2 != nil {
 		return errors.New(err2.Error())
 	}
@@ -32,7 +33,9 @@ func GetSingleKey(key string) (interface{}, error) {
 	}
 	return val, nil
 }
-
+func DelKey(key string, ctx context.Context) (int64, error) {
+	return Client.Del(ctx, key).Result()
+}
 func SetMultiple(ctx context.Context, session map[string]interface{}, keyName string) {
 
 	for k, v := range session {

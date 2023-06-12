@@ -18,6 +18,7 @@ func NewUserAgentMiddleware() *UserAgentMiddleware {
 func (m *UserAgentMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var dataUser map[string]string
+		var dataCtx map[string]string
 		var errorMessage string
 
 		val := r.Header.Get("User-Agent")
@@ -27,7 +28,7 @@ func (m *UserAgentMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 			// check
 		}
 		dataUser = cache.GetMultiple(cookie.Value)
-
+		dataCtx = map[string]string{"useragent": val, "session-id": cookie.Value}
 		if dataUser["auth"] != "1" {
 			errorMessage = "Login Required"
 			httpx.WriteJsonCtx(r.Context(), w, 401, errorEntity.Error{
@@ -35,7 +36,10 @@ func (m *UserAgentMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 				Message: errorMessage})
 		} else if dataUser["auth"] == "1" {
 			reqCtx := r.Context()
-			ctx := context.WithValue(reqCtx, "User-Agent", val)
+
+			ctx := context.WithValue(reqCtx, "data", dataCtx)
+
+			//ctx = context.WithValue(reqCtx, "session-id", cookie.Value)
 			newReq := r.WithContext(ctx)
 			next(w, newReq)
 		}

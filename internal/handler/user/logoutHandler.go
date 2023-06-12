@@ -1,15 +1,15 @@
-package test
+package user
 
 import (
 	"net/http"
 
-	"anysock/internal/logic/test"
+	"anysock/internal/logic/user"
 	"anysock/internal/svc"
 	"anysock/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
-func SetRedisHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func LogoutHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.EmptyReq
 		if err := httpx.Parse(r, &req); err != nil {
@@ -17,8 +17,8 @@ func SetRedisHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
-		l := test.NewSetRedisLogic(r.Context(), svcCtx)
-		resp, err := l.SetRedis(&req)
+		l := user.NewLogoutLogic(r.Context(), svcCtx)
+		resp, err := l.Logout(&req, w)
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {

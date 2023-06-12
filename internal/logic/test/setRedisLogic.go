@@ -23,7 +23,7 @@ func NewSetRedisLogic(ctx context.Context, svcCtx *svc.ServiceContext) *SetRedis
 	}
 }
 
-func (l *SetRedisLogic) SetRedis(req *types.PayloadReq) (resp *types.TextResp, err error) {
+func (l *SetRedisLogic) SetRedis(req *types.EmptyReq) (resp *types.TextResp, err error) {
 	// todo: add your logic here and delete this line
 
 	return

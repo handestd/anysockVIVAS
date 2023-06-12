@@ -1,4 +1,4 @@
-package test
+package admin
 
 import (
 	"context"
@@ -9,21 +9,21 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type GetRedisLogic struct {
+type LogoutLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewGetRedisLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetRedisLogic {
-	return &GetRedisLogic{
+func NewLogoutLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LogoutLogic {
+	return &LogoutLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *GetRedisLogic) GetRedis(req *types.EmptyReq) (resp *types.TextResp, err error) {
+func (l *LogoutLogic) Logout(req *types.EmptyReq) (resp *types.TextResp, err error) {
 	// todo: add your logic here and delete this line
 
 	return
