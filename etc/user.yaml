@@ -9,5 +9,5 @@ MySqlConf:
   Pass:
   Host: localhost
   Port: 3306
-  DbName: anysock
+  DbName: anysock2
   Parameter: charset=utf8mb4&parseTime=True&loc=Local

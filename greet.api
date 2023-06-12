@@ -108,7 +108,7 @@ service user {
 
 @server(
 	jwt: JwtAuth
-	group: admin
+	group: auth
 	middleware: UserAgentMiddleware,LogMiddleware
 )
 service user {

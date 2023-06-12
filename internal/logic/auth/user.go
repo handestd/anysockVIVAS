@@ -1,7 +1,8 @@
-package admin
+package auth
 
 import (
 	error_entity "anysock/internal/error"
+
 	"anysock/internal/model"
 	"anysock/internal/types"
 	"anysock/pkg/cache"

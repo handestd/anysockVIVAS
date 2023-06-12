@@ -1,24 +1,24 @@
-package admin
+package auth
 
 import (
 	"net/http"
 
-	"anysock/internal/logic/admin"
+	"anysock/internal/logic/auth"
 	"anysock/internal/svc"
 	"anysock/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
-func MyUserHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func UsersHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.GetUserReq
+		var req types.GetUsersReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
 
-		l := admin.NewMyUserLogic(r.Context(), svcCtx)
-		resp, err := l.MyUser(&req)
+		l := auth.NewUsersLogic(r.Context(), svcCtx)
+		resp, err := l.Users(&req)
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {

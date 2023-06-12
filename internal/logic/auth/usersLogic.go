@@ -1,12 +1,13 @@
-package admin
+package auth
 
 import (
 	error_entity "anysock/internal/error"
 	"anysock/internal/model"
-	"anysock/internal/svc"
-	"anysock/internal/types"
 	"context"
 	"fmt"
+
+	"anysock/internal/svc"
+	"anysock/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

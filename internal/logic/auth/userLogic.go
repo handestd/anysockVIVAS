@@ -1,9 +1,11 @@
-package admin
+package auth
 
 import (
+	"context"
+
 	"anysock/internal/svc"
 	"anysock/internal/types"
-	"context"
+
 	"github.com/zeromicro/go-zero/core/logx"
 )
 

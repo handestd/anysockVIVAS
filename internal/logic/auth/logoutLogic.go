@@ -1,10 +1,12 @@
-package user
+package auth
 
 import (
-	"anysock/internal/svc"
-	"anysock/internal/types"
+	"anysock/pkg/cache"
 	"context"
 	"net/http"
+
+	"anysock/internal/svc"
+	"anysock/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -25,14 +27,18 @@ func NewLogoutLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LogoutLogi
 
 func (l *LogoutLogic) Logout(req *types.EmptyReq, w http.ResponseWriter) (resp *types.TextResp, err error) {
 	// todo: add your logic here and delete this line
-	sessionId := l.ctx.Value("dataCtx").(map[string]string)["session-id"]
+	sessionId := l.ctx.Value("data").(map[string]string)["session-id"]
 
-	//http.SetCookie(w, &http.Cookie{
-	//	Name:  "session-id",
-	//	Value: "",
-	//})
+	http.SetCookie(w, &http.Cookie{
+		Name:  "session-id",
+		Value: "",
+	})
 
 	//rediscache.DelKey()
+	cache.DelKey(sessionId, l.ctx)
 	l.Logger.Info(sessionId)
+
+	l.Logger.Infov("---------------------------")
+	l.Logger.Infov(sessionId)
 	return
 }

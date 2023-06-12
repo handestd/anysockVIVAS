@@ -26,6 +26,10 @@ func (m *UserAgentMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 
 		if err != nil {
 			// check
+			errorMessage = "Missing cookie"
+			httpx.WriteJsonCtx(r.Context(), w, 401, errorEntity.Error{
+				Code:    403,
+				Message: errorMessage})
 		}
 		dataUser = cache.GetMultiple(cookie.Value)
 		dataCtx = map[string]string{"useragent": val, "session-id": cookie.Value}

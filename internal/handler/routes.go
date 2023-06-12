@@ -4,7 +4,7 @@ package handler
 import (
 	"net/http"
 
-	admin "anysock/internal/handler/admin"
+	auth "anysock/internal/handler/auth"
 	test "anysock/internal/handler/test"
 	user "anysock/internal/handler/user"
 	"anysock/internal/svc"
@@ -57,22 +57,22 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				{
 					Method:  http.MethodGet,
 					Path:    "/user",
-					Handler: admin.MyUserHandler(serverCtx),
+					Handler: auth.MyUserHandler(serverCtx),
 				},
 				{
 					Method:  http.MethodGet,
 					Path:    "/user/:id",
-					Handler: admin.UserHandler(serverCtx),
+					Handler: auth.UserHandler(serverCtx),
 				},
 				{
 					Method:  http.MethodGet,
 					Path:    "/users",
-					Handler: admin.UsersHandler(serverCtx),
+					Handler: auth.UsersHandler(serverCtx),
 				},
 				{
 					Method:  http.MethodPost,
 					Path:    "/user/logout",
-					Handler: admin.LogoutHandler(serverCtx),
+					Handler: auth.LogoutHandler(serverCtx),
 				},
 			}...,
 		),
