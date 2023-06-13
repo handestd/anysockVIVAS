@@ -28,17 +28,11 @@ func NewLogoutLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LogoutLogi
 func (l *LogoutLogic) Logout(req *types.EmptyReq, w http.ResponseWriter) (resp *types.TextResp, err error) {
 	// todo: add your logic here and delete this line
 	sessionId := l.ctx.Value("data").(map[string]string)["session-id"]
-
 	http.SetCookie(w, &http.Cookie{
 		Name:  "session-id",
 		Value: "",
 	})
-
-	//rediscache.DelKey()
 	cache.DelKey(sessionId, l.ctx)
-	l.Logger.Info(sessionId)
 
-	l.Logger.Infov("---------------------------")
-	l.Logger.Infov(sessionId)
-	return
+	return &types.TextResp{Message: "success"}, nil
 }
