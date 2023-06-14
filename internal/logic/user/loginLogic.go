@@ -98,7 +98,6 @@ func (l *LoginLogic) CreateUserSession(w http.ResponseWriter, user model.User) e
 		Value:  sessionID,
 		MaxAge: 3600,
 	})
-
 	// convert struct to map
 	dataUser = map[string]interface{}{
 		"id":       user.Id,

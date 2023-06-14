@@ -1,6 +1,11 @@
 package config
 
-import "github.com/zeromicro/go-zero/rest"
+import (
+	"flag"
+	"github.com/zeromicro/go-zero/rest"
+)
+
+var ConfigFile = flag.String("f", "etc/user.yaml", "the config file")
 
 type Config struct {
 	rest.RestConf
@@ -17,5 +22,9 @@ type Config struct {
 		Port      int64
 		DbName    string
 		Parameter string
+	}
+
+	RedisConf struct {
+		Host string
 	}
 }

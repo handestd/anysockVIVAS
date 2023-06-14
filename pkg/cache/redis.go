@@ -1,17 +1,23 @@
 package cache
 
 import (
+	"anysock/internal/config"
 	"context"
 	"errors"
 	"github.com/redis/go-redis/v9"
+	"github.com/zeromicro/go-zero/core/conf"
 	"time"
 )
 
 var Client *redis.Client
 
 func Connect() {
+
+	var c config.Config
+	conf.MustLoad(*config.ConfigFile, &c)
+
 	Client = redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379",
+		Addr:     c.RedisConf.Host + ":6379",
 		Password: "", // no password set
 		DB:       0,  // use default DB
 	})

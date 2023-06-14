@@ -1,0 +1,32 @@
+version: '3' # version của docker-compose
+
+services: # dùng để khai báo các service
+  redis: # tên service
+    image: redis # image từ dockerhub
+    ports:
+      - '9999:6379' # port trái là port để expose port ra host, port phải là port của service chạy trong  container
+
+  mysql:
+    build:
+      context: . # xác định thư mục nguồn khi build dockerfile
+      dockerfile: Dockerfile.mysql # chỉ định tên dockerfile cần build
+    restart: always # tự động restart container khi xảy ra lỗi
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_DATABASE: anysock2
+
+    ports:
+      - '3306:3306'
+
+  anysock:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on: # chạy các container được define ở dưới trước , xong mới chạy đến anysock
+      - mysql
+      - redis
+
+    ports:
+      - '8888:8888'
+
+

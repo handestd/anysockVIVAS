@@ -29,7 +29,6 @@ func NewUsersLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UsersLogic 
 func (l *UsersLogic) Users(req *types.GetUsersReq) (resp *types.GetUsersResp, err error) {
 	// sua lai cach dat ten bien
 	var users []model.User
-
 	// dat chung bien trong 1 scope
 	users, err = l.svcCtx.UserModel.GetUsers(context.Background())
 
