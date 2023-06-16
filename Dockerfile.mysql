@@ -1,4 +1,4 @@
 FROM mysql:8
 
-COPY ./attachment /docker-entrypoint-initdb.d
+COPY ./attachment/anysock.sql /docker-entrypoint-initdb.d/anysock.sql
 

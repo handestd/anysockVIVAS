@@ -4,7 +4,7 @@ services: # dùng để khai báo các service
   redis: # tên service
     image: redis # image từ dockerhub
     ports:
-      - '9999:6379' # port trái là port để expose port ra host, port phải là port của service chạy trong  container
+      - '6379:6379' # port trái là port để expose port ra host, port phải là port của service chạy trong  container
 
   mysql:
     build:
@@ -14,7 +14,6 @@ services: # dùng để khai báo các service
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
       MYSQL_DATABASE: anysock2
-
     ports:
       - '3306:3306'
 

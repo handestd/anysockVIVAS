@@ -1,7 +1,7 @@
 FROM golang:alpine3.18
 #thu trong sinh ra trong image
-WORKDIR /wrongdir/
-
+WORKDIR /anysock/
+#RUN mkdir -p /usr/src/app
 COPY . .
 
 RUN go mod tidy
