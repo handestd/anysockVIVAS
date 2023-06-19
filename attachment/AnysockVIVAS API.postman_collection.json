@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "a1e6d7dd-04e0-4382-ad1e-1636ccfa4376",
-		"name": "Mini Sample API for go-zero",
+		"_postman_id": "5399130c-221a-4449-89c7-d1e6da650351",
+		"name": "AnysockVIVAS API",
 		"description": "Just some easy API endpoint ^^",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "2225644"
@@ -47,7 +47,8 @@
 			"name": "Test Set Redis",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": ""
 			},
 			"response": []
 		},
@@ -85,7 +86,26 @@
 			"name": "Test Random User",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"message\": \"logout\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "0.0.0.0:8888/user/logout"
 			},
 			"response": []
 		}
